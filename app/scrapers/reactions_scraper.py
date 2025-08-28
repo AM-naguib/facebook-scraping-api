@@ -232,24 +232,57 @@ class FacebookReactionsScraper:
             print(content[:500])
             print(f"{'='*50}")
             
-            # التحقق من تسجيل الدخول والأخطاء أولاً
+            # التحقق من تسجيل الدخول والأخطاء أولاً (بطريقة أكثر دقة)
             content_lower = content.lower()
             
-            if any(keyword in content_lower for keyword in ['login', 'sign in', 'تسجيل الدخول']):
+            # فحص صفحات تسجيل الدخول الحقيقية فقط
+            login_indicators = [
+                'login form', 
+                'sign in form',
+                'loginform',
+                'please enter your password',
+                'enter your password',
+                'تسجيل الدخول إلى فيسبوك',
+                'ادخل كلمة المرور',
+                'log into facebook'
+            ]
+            
+            if any(indicator in content_lower for indicator in login_indicators):
                 print(f"❌ [DEBUG] يبدو أن فيسبوك يطلب تسجيل الدخول - الكوكيز قد تكون منتهية الصلاحية")
                 return False
             
-            if any(keyword in content_lower for keyword in ['error', 'not found', '404', 'خطأ']):
+            # فحص صفحات الخطأ
+            error_indicators = [
+                'page not found',
+                'this page isn\'t available',
+                'content not found',
+                'error 404',
+                'الصفحة غير موجودة'
+            ]
+            
+            if any(indicator in content_lower for indicator in error_indicators):
                 print(f"❌ [DEBUG] فيسبوك يعرض صفحة خطأ")
                 return False
             
-            if 'checkpoint' in content_lower or 'security' in content_lower:
+            # فحص checkpoint/security
+            security_indicators = [
+                'security checkpoint',
+                'verify your identity',
+                'account temporarily locked',
+                'نقطة تفتيش أمنية',
+                'تأكيد الهوية'
+            ]
+            
+            if any(indicator in content_lower for indicator in security_indicators):
                 print(f"❌ [DEBUG] فيسبوك يطلب تأكيد الأمان - قد تحتاج لتسجيل دخول جديد")
                 return False
+            
+            print(f"✅ [DEBUG] الصفحة تبدو طبيعية، جاري البحث عن التوكنز...")
             
             # استخراج fb_dtsg
             print(f"🔍 [DEBUG] البحث عن fb_dtsg...")
             dtsg_patterns = [
+                # الأنماط التقليدية
                 r'"DTSGInitialData",\[\],\{"token":"([^"]+)"',
                 r'"dtsg":\{"token":"([^"]+)"',
                 r'fb_dtsg":"([^"]+)"',
@@ -259,9 +292,14 @@ class FacebookReactionsScraper:
                 r'name="fb_dtsg"\s+value="([^"]+)"',
                 r'fb_dtsg.*?value="([^"]+)"',
                 r'"token":"([a-zA-Z0-9_-]{20,})"',
-                # أنماط إضافية للمحتوى المضغوط
-                r'dtsg[^a-zA-Z0-9]+([a-zA-Z0-9_-]{20,})',
-                r'token[^a-zA-Z0-9]+([a-zA-Z0-9_-]{20,})'
+                # أنماط جديدة للصيغة الحديثة من فيسبوك
+                r'"dtsg"[^"]*"[^"]*"([a-zA-Z0-9_-]{20,})"',
+                r'"LSD"[^"]*"[^"]*"([a-zA-Z0-9_-]{20,})"',
+                r'"token":\s*"([a-zA-Z0-9_-]{20,})"',
+                r'DTSG[^a-zA-Z0-9]*([a-zA-Z0-9_-]{20,})',
+                r'"serverJSData"[^}]*"dtsg"[^"]*"([a-zA-Z0-9_-]{20,})"',
+                r'"dtsg_ag":"([^"]+)"',
+                r'"asyncParams"[^}]*"fb_dtsg":"([^"]+)"'
             ]
             
             for i, pattern in enumerate(dtsg_patterns):
@@ -276,16 +314,45 @@ class FacebookReactionsScraper:
             
             if not self.fb_dtsg:
                 print(f"❌ [DEBUG] فشل في العثور على fb_dtsg بأي نمط")
-                # البحث عن أي نصوص تحتوي على dtsg أو token
-                print(f"🔍 [DEBUG] البحث عن أي نصوص تحتوي على 'dtsg':")
-                dtsg_matches = re.findall(r'.{0,50}dtsg.{0,50}', content, re.IGNORECASE)
-                for match in dtsg_matches[:5]:  # عرض أول 5 نتائج
-                    print(f"  - {match}")
                 
-                print(f"🔍 [DEBUG] البحث عن أي نصوص تحتوي على 'token':")
-                token_matches = re.findall(r'.{0,30}token.{0,30}', content, re.IGNORECASE)
-                for match in token_matches[:5]:  # عرض أول 5 نتائج
-                    print(f"  - {match}")
+                # محاولة استخراج من JSON مضمن
+                print(f"🔍 [DEBUG] البحث في البيانات المضمنة...")
+                json_patterns = [
+                    r'"server_timestamps":true[^}]*"fb_dtsg":"([^"]+)"',
+                    r'"__spinner[^}]*"fb_dtsg":"([^"]+)"',
+                    r'"asyncSignal[^}]*"fb_dtsg":"([^"]+)"',
+                    r'"__async[^}]*fb_dtsg[^"]*"([a-zA-Z0-9_-]{20,})"'
+                ]
+                
+                for i, pattern in enumerate(json_patterns):
+                    print(f"🔍 [DEBUG] تجريب نمط JSON #{i+1}")
+                    match = re.search(pattern, content)
+                    if match:
+                        self.fb_dtsg = match.group(1)
+                        print(f"✅ [DEBUG] تم العثور على fb_dtsg من JSON: {self.fb_dtsg[:20]}...")
+                        break
+                
+                if not self.fb_dtsg:
+                    # البحث عن أي نصوص تحتوي على dtsg أو token
+                    print(f"🔍 [DEBUG] البحث عن أي نصوص تحتوي على 'dtsg':")
+                    dtsg_matches = re.findall(r'.{0,50}dtsg.{0,50}', content, re.IGNORECASE)
+                    for match in dtsg_matches[:5]:  # عرض أول 5 نتائج
+                        print(f"  - {match}")
+                    
+                    print(f"🔍 [DEBUG] البحث عن أي نصوص تحتوي على 'token':")
+                    token_matches = re.findall(r'.{0,30}token.{0,30}', content, re.IGNORECASE)
+                    for match in token_matches[:5]:  # عرض أول 5 نتائج
+                        print(f"  - {match}")
+                    
+                    # كحل أخير، نبحث عن أي توكن يبدو صحيح
+                    print(f"🔍 [DEBUG] البحث عن أي توكنز محتملة...")
+                    potential_tokens = re.findall(r'"([a-zA-Z0-9_-]{20,})"', content)
+                    if potential_tokens:
+                        # اختر أطول توكن (عادة fb_dtsg يكون طويل)
+                        longest_token = max(potential_tokens, key=len)
+                        if len(longest_token) >= 30:  # fb_dtsg عادة أطول من 30 حرف
+                            self.fb_dtsg = longest_token
+                            print(f"🔍 [DEBUG] تم العثور على توكن محتمل: {self.fb_dtsg[:20]}...")
             
             # استخراج lsd
             print(f"🔍 [DEBUG] البحث عن lsd...")
