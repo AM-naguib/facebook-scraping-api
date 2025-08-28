@@ -1,0 +1,29 @@
+[Unit]
+Description=Facebook API Monitor
+Documentation=file://monitoring_guide.md
+After=network.target facebook-api.service
+Wants=network-online.target
+Requires=facebook-api.service
+
+[Service]
+Type=simple
+User=www-data
+Group=www-data
+WorkingDirectory=/path/to/your/facebook-scraper-api
+Environment=PATH=/path/to/your/venv/bin:/usr/local/bin:/usr/bin:/bin
+Environment=PYTHONPATH=/path/to/your/facebook-scraper-api
+Environment=API_URL=http://localhost:8000
+Environment=TELEGRAM_TOKEN=your_telegram_bot_token_here
+Environment=TELEGRAM_CHAT_ID=your_telegram_chat_id_here
+ExecStart=/path/to/your/venv/bin/python monitor_api.py --url http://localhost:8000 --interval 5
+Restart=always
+RestartSec=30
+
+# Security settings
+NoNewPrivileges=true
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths=/path/to/your/facebook-scraper-api
+
+[Install]
+WantedBy=multi-user.target

@@ -9,7 +9,7 @@ class Settings:
     
     # Server settings
     HOST: str = "0.0.0.0"
-    PORT: int = 8000
+    PORT: int = 8091
     DEBUG: bool = True
     
     # Threading settings
