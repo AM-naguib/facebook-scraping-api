@@ -339,3 +339,4 @@ class FacebookCommentsScraper:
         except Exception as e:
             return {"error": f"خطأ عام في السكربت: {str(e)}", "comments": []}
 
+

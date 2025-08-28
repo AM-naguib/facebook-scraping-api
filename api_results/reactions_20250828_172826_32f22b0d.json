@@ -1,0 +1,318 @@
+{
+  "job_info": {
+    "job_id": "reactions_20250828_172826_32f22b0d",
+    "scraped_at": "2025-08-28T17:28:51.922170",
+    "api_version": "v1"
+  },
+  "success": true,
+  "post_url": "https://www.facebook.com/Mostafa.Qandill/posts/pfbid0LpWgBHUDskVMieUcFMUf3XijZztkAnUX1g8oAMNqYn4vD3zMFoKCCCxnqVBc8uXLl",
+  "post_id": "pfbid0LpWgBHUDskVMieUcFMUf3XijZztkAnUX1g8oAMNqYn4vD3zMFoKCCCxnqVBc8uXLl",
+  "total_reactions": 30,
+  "reaction_stats": {
+    "SUPPORT": 13,
+    "LIKE": 17
+  },
+  "reactions": [
+    {
+      "user": {
+        "id": "100039193421280",
+        "name": "Ma G ED",
+        "profile_url": "https://www.facebook.com/mag.ed.9279807",
+        "profile_picture": "https://scontent.faly8-1.fna.fbcdn.net/v/t39.30808-1/488420523_1386596999323401_2427659359284216756_n.jpg?stp=cp0_dst-jpg_s40x40_tt6&_nc_cat=102&ccb=1-7&_nc_sid=1d2534&_nc_ohc=sPAuTM1nQikQ7kNvwFonsNh&_nc_oc=AdmeDdEfAHF_LvF7djNLEwB5CSHpBpTl3C10EvCrXTuqdX5XkqSflsvAPKobEXWF4oE&_nc_zt=24&_nc_ht=scontent.faly8-1.fna&_nc_gid=RApohtwc-D4oBilU4zLObg&oh=00_AfXgly_3Y9AZPUV6I-xUOzKCSFzVo8T5SBULor_adwRR1Q&oe=68B648F5"
+      },
+      "reaction_type": "SUPPORT",
+      "timestamp": null
+    },
+    {
+      "user": {
+        "id": "100027109359242",
+        "name": "منه جمال",
+        "profile_url": "https://www.facebook.com/mena.gamal.927543",
+        "profile_picture": "https://scontent.faly8-1.fna.fbcdn.net/v/t39.30808-1/535386403_1858906655022962_3366539677855694201_n.jpg?stp=cp0_dst-jpg_s40x40_tt6&_nc_cat=101&ccb=1-7&_nc_sid=1d2534&_nc_ohc=mqAF9vxy11MQ7kNvwFVYggF&_nc_oc=AdmLrO3T1P4lowPAOyMbVc6CPIaXhWWAwDyEY2ibBqQ1FUy5EX-62O6lGp5L6U9TbmM&_nc_zt=24&_nc_ht=scontent.faly8-1.fna&_nc_gid=RApohtwc-D4oBilU4zLObg&oh=00_AfWeAhReK13pvZd0HZjO8AfehtABCbETujppJafB9Yy_VQ&oe=68B646C5"
+      },
+      "reaction_type": "LIKE",
+      "timestamp": null
+    },
+    {
+      "user": {
+        "id": "61558728580271",
+        "name": "Elgoker store ",
+        "profile_url": "https://www.facebook.com/Elgokerstore",
+        "profile_picture": "https://scontent.faly8-1.fna.fbcdn.net/v/t39.30808-1/450989883_122125709576290952_3537987680417347536_n.jpg?stp=cp0_dst-jpg_s40x40_tt6&_nc_cat=101&ccb=1-7&_nc_sid=2d3e12&_nc_ohc=CrV6e1QUAbEQ7kNvwEfy398&_nc_oc=Adm9Du3GALw66j2Uc-Z5vV6_Y69jiF0P7IeaQfgVrQ7dQcPKNp4BQLjlprFFI98cYRY&_nc_zt=24&_nc_ht=scontent.faly8-1.fna&_nc_gid=RApohtwc-D4oBilU4zLObg&oh=00_AfXoA-4A4nrRtgCOCFy6SWtWBxTkTMbmeUOLY8svszs72A&oe=68B655F7"
+      },
+      "reaction_type": "SUPPORT",
+      "timestamp": null
+    },
+    {
+      "user": {
+        "id": "100034109353046",
+        "name": "محمد ناصر",
+        "profile_url": "https://www.facebook.com/mhmd.nasr.893123",
+        "profile_picture": "https://scontent.faly8-2.fna.fbcdn.net/v/t39.30808-1/462919679_1228690108277956_572132231838479768_n.jpg?stp=cp0_dst-jpg_s40x40_tt6&_nc_cat=110&ccb=1-7&_nc_sid=1d2534&_nc_ohc=19_vuBARUI4Q7kNvwFEtcLT&_nc_oc=Adni5T7xWHTfNPqMsUA2Pq_GP4mR9qt1HYDMPusZMAu_2qTJLaTvH2CXa2k7NFv_cvQ&_nc_zt=24&_nc_ht=scontent.faly8-2.fna&_nc_gid=RApohtwc-D4oBilU4zLObg&oh=00_AfWLf-3UyXq6pgBfotMfzrLf6VFpPRlS640OIRGec3hLng&oe=68B626DC"
+      },
+      "reaction_type": "SUPPORT",
+      "timestamp": null
+    },
+    {
+      "user": {
+        "id": "100006352725568",
+        "name": "Ramy Shalaan",
+        "profile_url": "https://www.facebook.com/ramy.shalaan.90",
+        "profile_picture": "https://scontent.faly8-1.fna.fbcdn.net/v/t39.30808-1/428480041_3764528857102168_1978900822233052080_n.jpg?stp=cp0_dst-jpg_s40x40_tt6&_nc_cat=104&ccb=1-7&_nc_sid=1d2534&_nc_ohc=cwLbhX_MjDIQ7kNvwHpHle6&_nc_oc=Adk-Qlm6_yqd8fbwoEzc7LqIXIWIcoOp3vBekWRAK1awvxjt0KDXVBM188YP0v-4CQs&_nc_zt=24&_nc_ht=scontent.faly8-1.fna&_nc_gid=RApohtwc-D4oBilU4zLObg&oh=00_AfX8BjrqU2goQXQJObcevUP2ibfwzBkn8nm9jdrH67WFRQ&oe=68B63587"
+      },
+      "reaction_type": "LIKE",
+      "timestamp": null
+    },
+    {
+      "user": {
+        "id": "100027541560561",
+        "name": "Nermeen Assaf",
+        "profile_url": "https://www.facebook.com/NermenMarketing",
+        "profile_picture": "https://scontent.faly8-1.fna.fbcdn.net/v/t39.30808-1/351139816_1703655456736081_8167612996456074455_n.jpg?stp=cp0_dst-jpg_s40x40_tt6&_nc_cat=103&ccb=1-7&_nc_sid=1d2534&_nc_ohc=LBSkMkcV3-4Q7kNvwE2Y7E2&_nc_oc=AdkAsxrzbeyq0eVKWexol94E4j-tL7s4eNthLOSBdMcVc1x0KjQ7sN-Onhx3w-03CWo&_nc_zt=24&_nc_ht=scontent.faly8-1.fna&_nc_gid=RApohtwc-D4oBilU4zLObg&oh=00_AfWPT1J-yZglT8Nf2CVGC0GYjjfH6N_dR8aJvuMfOfGgAA&oe=68B633D8"
+      },
+      "reaction_type": "SUPPORT",
+      "timestamp": null
+    },
+    {
+      "user": {
+        "id": "100071655292330",
+        "name": "Youssef Al-Siddiq",
+        "profile_url": "https://www.facebook.com/youssef.al.siddiq.206187",
+        "profile_picture": "https://scontent.faly8-1.fna.fbcdn.net/v/t39.30808-1/471171608_602412082157296_4982523909479886221_n.jpg?stp=cp0_dst-jpg_s40x40_tt6&_nc_cat=103&ccb=1-7&_nc_sid=1d2534&_nc_ohc=uWw_djxYFBcQ7kNvwHDdHZL&_nc_oc=AdkvLlk2uSMY8ps9LxtFXh4Qtm6A-DeLBKsRrly6QHLB8p6OgWvFx-wOTlEydwEHKc8&_nc_zt=24&_nc_ht=scontent.faly8-1.fna&_nc_gid=RApohtwc-D4oBilU4zLObg&oh=00_AfV8Vh5i-VQtiZVTJI-JnBcqZQYq71-NfO_Vblhnc0xSOg&oe=68B64810"
+      },
+      "reaction_type": "LIKE",
+      "timestamp": null
+    },
+    {
+      "user": {
+        "id": "61555808498585",
+        "name": "Mahmoud Sayed",
+        "profile_url": "https://www.facebook.com/mahmoud.sayed.31369",
+        "profile_picture": "https://scontent.faly8-1.fna.fbcdn.net/v/t39.30808-1/421837081_122105843636193616_7944949314946916626_n.jpg?stp=cp0_dst-jpg_s40x40_tt6&_nc_cat=100&ccb=1-7&_nc_sid=1d2534&_nc_ohc=abgywDrojQkQ7kNvwHognjM&_nc_oc=Adl96XCSdi7GHfjNquAFJ0DddflEQyzEPjIA_XoG-yX_iJ3xhnx9JhPjl3ZCb9-yFc4&_nc_zt=24&_nc_ht=scontent.faly8-1.fna&_nc_gid=RApohtwc-D4oBilU4zLObg&oh=00_AfUlsMSyZvqT3FZoOOPupJWjhVYs3lZAtLAejwf9pLZKCw&oe=68B64ED3"
+      },
+      "reaction_type": "SUPPORT",
+      "timestamp": null
+    },
+    {
+      "user": {
+        "id": "61552948003024",
+        "name": "Omar Kelany",
+        "profile_url": "https://www.facebook.com/omar.kelany.723415",
+        "profile_picture": "https://scontent.faly8-1.fna.fbcdn.net/v/t39.30808-1/529232847_122200056926098266_8110897527971747206_n.jpg?stp=cp0_dst-jpg_s40x40_tt6&_nc_cat=105&ccb=1-7&_nc_sid=1d2534&_nc_ohc=EOnapFTY_W8Q7kNvwF5UnUd&_nc_oc=Adn3fomFDCBuNAJKd3p1sBCblFyzRRPnxIvbn1Znxl75XRzylEBVZsfOEJXHDrmRbeQ&_nc_zt=24&_nc_ht=scontent.faly8-1.fna&_nc_gid=RApohtwc-D4oBilU4zLObg&oh=00_AfXcqRn7RyQBFt_DAZHB8JZwrQbCEGxZIJPDa2OV6-GTrQ&oe=68B647E2"
+      },
+      "reaction_type": "LIKE",
+      "timestamp": null
+    },
+    {
+      "user": {
+        "id": "100007231570199",
+        "name": "يونس رافت",
+        "profile_url": "https://www.facebook.com/ywns.raft.352197",
+        "profile_picture": "https://scontent.faly8-2.fna.fbcdn.net/v/t39.30808-1/503710309_3976298342621179_6226595139671706058_n.jpg?stp=cp0_dst-jpg_s40x40_tt6&_nc_cat=109&ccb=1-7&_nc_sid=1d2534&_nc_ohc=nCk2SGPJ9K0Q7kNvwFr3Nyn&_nc_oc=AdmDkDTNkttzPImYk4PjNwqlrFyH7oZwYZ3bJX-77O5hyaxLhGO_s5UlDW1hi_CT_rE&_nc_zt=24&_nc_ht=scontent.faly8-2.fna&_nc_gid=RApohtwc-D4oBilU4zLObg&oh=00_AfXoRsa2SVzsjkzWDc8mdEwREq4wst9xTB7fkApbHfkEXQ&oe=68B6487E"
+      },
+      "reaction_type": "LIKE",
+      "timestamp": null
+    },
+    {
+      "user": {
+        "id": "100052959154320",
+        "name": "Mazen Ahmed",
+        "profile_url": "https://www.facebook.com/mazen.ahmed.847250",
+        "profile_picture": "https://scontent.faly8-2.fna.fbcdn.net/v/t39.30808-1/434055446_937272464714717_5466951321112823867_n.jpg?stp=cp0_dst-jpg_s40x40_tt6&_nc_cat=111&ccb=1-7&_nc_sid=1d2534&_nc_ohc=XwqebLpFaegQ7kNvwHRxkD6&_nc_oc=AdkymOlsc4zkZeK7V2-_W8v6XpF18BPjOSON6gUkY-fXQa1IuD8Qhjt-y043IdGNia4&_nc_zt=24&_nc_ht=scontent.faly8-2.fna&_nc_gid=ow-9BCJBvmr5NitdUj4ESQ&oh=00_AfU8QotfmaduLJa2UAEKe7Av7jxmfACyW1p4Qy0Y_P9v1g&oe=68B62473"
+      },
+      "reaction_type": "SUPPORT",
+      "timestamp": null
+    },
+    {
+      "user": {
+        "id": "100011747790637",
+        "name": "Ahmed Omar",
+        "profile_url": "https://www.facebook.com/0ahmedomer",
+        "profile_picture": "https://scontent.faly8-1.fna.fbcdn.net/v/t39.30808-1/520824168_2396238457444391_228072106655544789_n.jpg?stp=cp0_dst-jpg_s40x40_tt6&_nc_cat=102&ccb=1-7&_nc_sid=e99d92&_nc_ohc=sGLK03dXhM8Q7kNvwGOq3ce&_nc_oc=AdmRLyv_CLTX0PBsDjThm8HqQSDmIgt5qfG5Ig7UyDp9c2Ei5CIJSIJZ0-VAKB2DYck&_nc_zt=24&_nc_ht=scontent.faly8-1.fna&_nc_gid=ow-9BCJBvmr5NitdUj4ESQ&oh=00_AfVPBPHQjpnxj0o2rahwf960lRVdDkx8YgiazCeBbLgxxw&oe=68B6542B"
+      },
+      "reaction_type": "LIKE",
+      "timestamp": null
+    },
+    {
+      "user": {
+        "id": "100007861151936",
+        "name": "Ahmed Shalaby",
+        "profile_url": "https://www.facebook.com/ahmed.shalaby.376258",
+        "profile_picture": "https://scontent.faly8-1.fna.fbcdn.net/v/t39.30808-1/538983346_4410875805851081_4546027163844391116_n.jpg?stp=cp0_dst-jpg_s40x40_tt6&_nc_cat=100&ccb=1-7&_nc_sid=e99d92&_nc_ohc=3aK45zl93LAQ7kNvwE1ywFD&_nc_oc=Adl4yCYz-A7T6Z-qn9YRYuQSHlDUKMlzqLwxZnIbb1EU3mWH-SphnM5UztEUCMT7ZFs&_nc_zt=24&_nc_ht=scontent.faly8-1.fna&_nc_gid=ow-9BCJBvmr5NitdUj4ESQ&oh=00_AfVLfkrWyjlDrbvQVVsxP4rl41kqSytp2tM-PGLfyRM2xw&oe=68B633EB"
+      },
+      "reaction_type": "LIKE",
+      "timestamp": null
+    },
+    {
+      "user": {
+        "id": "100000271609049",
+        "name": "Mohamed El AraBy",
+        "profile_url": "https://www.facebook.com/MAraby.Marketing",
+        "profile_picture": "https://scontent.faly8-2.fna.fbcdn.net/v/t39.30808-1/452646867_8240174402668198_8405089807021330536_n.jpg?stp=c0.0.1439.1439a_cp6_dst-jpg_s40x40_tt6&_nc_cat=109&ccb=1-7&_nc_sid=1d2534&_nc_ohc=gILkkerOqVgQ7kNvwG3qwhd&_nc_oc=AdmYVQFpcz_M9YUnG9BPnXIQNvdc6PjtWvmrRn4wUvJ-X7nwYGH3MBaCf-WDAAJ4vE8&_nc_zt=24&_nc_ht=scontent.faly8-2.fna&_nc_gid=ow-9BCJBvmr5NitdUj4ESQ&oh=00_AfWDURX3vTvLg-SgAxIemJW7w00S5wAG5o_5L3jPjbl3Xg&oe=68B627C6"
+      },
+      "reaction_type": "LIKE",
+      "timestamp": null
+    },
+    {
+      "user": {
+        "id": "100038668041719",
+        "name": "Abdo Fathi",
+        "profile_url": "https://www.facebook.com/abdo.fathi.12576",
+        "profile_picture": "https://scontent.faly8-1.fna.fbcdn.net/v/t39.30808-1/519870498_1385512042747717_4886297563806039033_n.jpg?stp=cp0_dst-jpg_s40x40_tt6&_nc_cat=107&ccb=1-7&_nc_sid=e99d92&_nc_ohc=UuJtYxr0s18Q7kNvwEiO_Vm&_nc_oc=AdnDjKl-UI5uwTikkUjzbo2G3SvHFSC7VuTemhp5DtUWofC2OR5E_7VClLMWIe2KiUc&_nc_zt=24&_nc_ht=scontent.faly8-1.fna&_nc_gid=ow-9BCJBvmr5NitdUj4ESQ&oh=00_AfW0yEF-vqnVuT3c225XLNVwjlnmeNT72RPnBmORtx2W6w&oe=68B6390A"
+      },
+      "reaction_type": "LIKE",
+      "timestamp": null
+    },
+    {
+      "user": {
+        "id": "100005468479431",
+        "name": "Abdallah Shehata",
+        "profile_url": "https://www.facebook.com/abdallah.shehata.75504",
+        "profile_picture": "https://scontent.faly8-2.fna.fbcdn.net/v/t39.30808-1/480961728_2738145466377709_1587320935116012129_n.jpg?stp=cp0_dst-jpg_s40x40_tt6&_nc_cat=109&ccb=1-7&_nc_sid=1d2534&_nc_ohc=qqc1UIh7Q18Q7kNvwEHrMs1&_nc_oc=AdnRh3wsUkIkPLGpVk7V6O7wHPHuVkH5yE4elTaXW1WX7N7q6cdzp7AQPizxo2QJvAA&_nc_zt=24&_nc_ht=scontent.faly8-2.fna&_nc_gid=ow-9BCJBvmr5NitdUj4ESQ&oh=00_AfVVwPMpF1M8Y_WZn3vUoTto8ecmFkyY4-GDehtMfpawXQ&oe=68B63D55"
+      },
+      "reaction_type": "LIKE",
+      "timestamp": null
+    },
+    {
+      "user": {
+        "id": "100024482352115",
+        "name": "محمد صابر زيدان",
+        "profile_url": "https://www.facebook.com/mohamedsaberzidan",
+        "profile_picture": "https://scontent.faly8-1.fna.fbcdn.net/v/t39.30808-1/500055642_1974127520079974_6519176462490620691_n.jpg?stp=cp0_dst-jpg_s40x40_tt6&_nc_cat=104&ccb=1-7&_nc_sid=1d2534&_nc_ohc=ZV27TkvgFXEQ7kNvwECDcSc&_nc_oc=AdlREZoxqM_vAXGWj0KgWSUuHljdPUQbVYCDw_nuPCAEOXhsyzniySJTS4sSnSdc6lY&_nc_zt=24&_nc_ht=scontent.faly8-1.fna&_nc_gid=ow-9BCJBvmr5NitdUj4ESQ&oh=00_AfU3XygwiT528aIWwYqIECOlE9zLMpXAomN0Q-k0i_B6vA&oe=68B6245C"
+      },
+      "reaction_type": "LIKE",
+      "timestamp": null
+    },
+    {
+      "user": {
+        "id": "100047470269593",
+        "name": "أحمد اشرف عبد العظيم",
+        "profile_url": "https://www.facebook.com/ahmed.alahlawy.961993",
+        "profile_picture": "https://scontent.faly8-1.fna.fbcdn.net/v/t1.6435-1/143600402_241186227473718_4754568999229475123_n.jpg?stp=cp0_dst-jpg_s40x40_tt6&_nc_cat=100&ccb=1-7&_nc_sid=e99d92&_nc_ohc=UHRWgtG5_xIQ7kNvwE69wLc&_nc_oc=Adn9NkycR5DCftjpfqITS99d5_t8D_7yfkUAlbp0Ghk1qVprRXhIKuLHSGJeyFaOo38&_nc_zt=24&_nc_ht=scontent.faly8-1.fna&_nc_gid=ow-9BCJBvmr5NitdUj4ESQ&oh=00_AfUJIajYdqAMB619T4wQ4WrmEqxLaKgQWWj57DfcCHEDNA&oe=68D7C9BE"
+      },
+      "reaction_type": "SUPPORT",
+      "timestamp": null
+    },
+    {
+      "user": {
+        "id": "100005007901037",
+        "name": "Mohamed Hossam",
+        "profile_url": "https://www.facebook.com/01009922783m",
+        "profile_picture": "https://scontent.faly8-2.fna.fbcdn.net/v/t39.30808-1/416606474_2622535177923387_1254708777670949410_n.jpg?stp=cp0_dst-jpg_s40x40_tt6&_nc_cat=110&ccb=1-7&_nc_sid=e99d92&_nc_ohc=E6PaRn7ftiAQ7kNvwGt6F2t&_nc_oc=AdlOygiisp32yMNgxHmOmwYmNQzm5GUqg9SgP1RR3cm0pBGCnfEadREMs0PPlQAfLPk&_nc_zt=24&_nc_ht=scontent.faly8-2.fna&_nc_gid=ow-9BCJBvmr5NitdUj4ESQ&oh=00_AfX7CCvxgcUzgFQgraJhN74cM7ISasJRWTUW5DItzxADCQ&oe=68B62716"
+      },
+      "reaction_type": "SUPPORT",
+      "timestamp": null
+    },
+    {
+      "user": {
+        "id": "100057068323704",
+        "name": "Mohammed Khaled",
+        "profile_url": "https://www.facebook.com/mahomed.khaled.589",
+        "profile_picture": "https://scontent.faly8-1.fna.fbcdn.net/v/t39.30808-1/518294467_1254317469813852_6691517582418596196_n.jpg?stp=cp0_dst-jpg_s40x40_tt6&_nc_cat=101&ccb=1-7&_nc_sid=e99d92&_nc_ohc=PxOg88krgkMQ7kNvwHyLRSV&_nc_oc=Adkps-G2IUa4ZBFEqqP3IgZgg1NGQ-YACb7QdB5UTpaXArlw0lUFrUPwokx61m3t6gc&_nc_zt=24&_nc_ht=scontent.faly8-1.fna&_nc_gid=ow-9BCJBvmr5NitdUj4ESQ&oh=00_AfW8BsWCP2D7zuVag0P7wl51gOmQ58yqxX0wS7hcl1D0jg&oe=68B62065"
+      },
+      "reaction_type": "LIKE",
+      "timestamp": null
+    },
+    {
+      "user": {
+        "id": "100004160714866",
+        "name": "Aya Farag Hamed",
+        "profile_url": "https://www.facebook.com/ayafarag09",
+        "profile_picture": "https://scontent.faly8-2.fna.fbcdn.net/v/t39.30808-1/473580182_3124752941006699_743266967178942502_n.jpg?stp=cp0_dst-jpg_s40x40_tt6&_nc_cat=109&ccb=1-7&_nc_sid=1d2534&_nc_ohc=I-XihIQUcw4Q7kNvwGf_dx1&_nc_oc=AdlzZgTxdwQEcz6syvFynuhbR-_N2cmAs8411sna3w30JK04VG36JJjDEQ9kXfQ7bLw&_nc_zt=24&_nc_ht=scontent.faly8-2.fna&_nc_gid=E-fRj9J10T41efNKg_uoZw&oh=00_AfV-08O0q7RRivj-PxTRqF-MCF_ulDP7elTquLo52JC72w&oe=68B63B1B"
+      },
+      "reaction_type": "SUPPORT",
+      "timestamp": null
+    },
+    {
+      "user": {
+        "id": "100001970249056",
+        "name": "اسامة حلمى احمد",
+        "profile_url": "https://www.facebook.com/asamt.hlmy.ahmd",
+        "profile_picture": "https://scontent.faly8-1.fna.fbcdn.net/v/t39.30808-1/395154088_6763152057093735_266530088087673468_n.jpg?stp=cp0_dst-jpg_s40x40_tt6&_nc_cat=103&ccb=1-7&_nc_sid=e99d92&_nc_ohc=V8GN-gA5DzYQ7kNvwEY9cOg&_nc_oc=Adk-2VghsUurvHy-3lFao4u9lJa0sIdaL6xywSIp8fY5ZSmGWR9x_L9pIQMGRxpBETA&_nc_zt=24&_nc_ht=scontent.faly8-1.fna&_nc_gid=E-fRj9J10T41efNKg_uoZw&oh=00_AfVLqvLWa6SkG5i9-mpBRP5QG81BVvVUfP2nC5KfJcgXuQ&oe=68B61EB2"
+      },
+      "reaction_type": "SUPPORT",
+      "timestamp": null
+    },
+    {
+      "user": {
+        "id": "100012772876172",
+        "name": "Amr Azp ElzoghPy",
+        "profile_url": "https://www.facebook.com/amr.azp",
+        "profile_picture": "https://scontent.faly8-2.fna.fbcdn.net/v/t39.30808-1/488934779_2145211585914583_3795511302662610930_n.jpg?stp=cp0_dst-jpg_p40x40_tt6&_nc_cat=111&ccb=1-7&_nc_sid=1d2534&_nc_ohc=FEX0HqrO1p8Q7kNvwGiL6w3&_nc_oc=Adl1IQjrX8cE0mWB_ZvYhEHiWngeiI4UHhMrhKbDIs82o9KfchWwd_20kFon_AbO8o0&_nc_zt=24&_nc_ht=scontent.faly8-2.fna&_nc_gid=E-fRj9J10T41efNKg_uoZw&oh=00_AfUDMv3_B6s7TDtmYdm63SIRuh7dK_QdhDJMP03PV2SHaQ&oe=68B637BA"
+      },
+      "reaction_type": "LIKE",
+      "timestamp": null
+    },
+    {
+      "user": {
+        "id": "100025320333121",
+        "name": "Ahmed Hatem",
+        "profile_url": "https://www.facebook.com/ahmed.hatem.136936",
+        "profile_picture": "https://scontent.faly8-2.fna.fbcdn.net/v/t39.30808-1/516449987_1932037127650280_317069907139648139_n.jpg?stp=cp0_dst-jpg_s40x40_tt6&_nc_cat=109&ccb=1-7&_nc_sid=1d2534&_nc_ohc=WTxEPFZyjtUQ7kNvwEjNyhd&_nc_oc=AdlDUjCRVzXsS8YmnJtqkRQ5CpR6X0jM1-KvRhd-Up3KBHz0WSF7IpXZ21V4eLBTvUs&_nc_zt=24&_nc_ht=scontent.faly8-2.fna&_nc_gid=E-fRj9J10T41efNKg_uoZw&oh=00_AfVZ7_YCfydcBt4luAPv_Q8rOw0GRCntHk6xsYTRhZ1yIA&oe=68B620C6"
+      },
+      "reaction_type": "LIKE",
+      "timestamp": null
+    },
+    {
+      "user": {
+        "id": "100068593718022",
+        "name": "Hazem Ahmed",
+        "profile_url": "https://www.facebook.com/hazemAhmed22",
+        "profile_picture": "https://scontent.faly8-2.fna.fbcdn.net/v/t39.30808-1/525661478_1050034240626357_5224515294227536438_n.jpg?stp=cp0_dst-jpg_s40x40_tt6&_nc_cat=108&ccb=1-7&_nc_sid=e99d92&_nc_ohc=ozPpoeUl5zoQ7kNvwHYAGJY&_nc_oc=AdnvpnITLVHEFQ_B2xcD43--YKeugWrxffAdTV5BpIX-VJNIx6BYaBjcM4uAXWWXxnU&_nc_zt=24&_nc_ht=scontent.faly8-2.fna&_nc_gid=E-fRj9J10T41efNKg_uoZw&oh=00_AfX9kGslfFxGfXUiwRQvCqaEVhk4Dl0LKSFl-SmZ92Xf2w&oe=68B6337A"
+      },
+      "reaction_type": "LIKE",
+      "timestamp": null
+    },
+    {
+      "user": {
+        "id": "100036994972943",
+        "name": "شين شمياء رمضان",
+        "profile_url": "https://www.facebook.com/shaimaa.salama.29",
+        "profile_picture": "https://scontent.faly8-2.fna.fbcdn.net/v/t39.30808-1/495380214_1375779586998527_2046824146455909355_n.jpg?stp=cp0_dst-jpg_s40x40_tt6&_nc_cat=109&ccb=1-7&_nc_sid=1d2534&_nc_ohc=eTq_Xr29cCsQ7kNvwF6vFfm&_nc_oc=AdmO1C8B91228-zF_z1Fih6T-S6iAMj9mtVDwtT6IYWWadZstgRWEgxMHYC5kVAGaZ8&_nc_zt=24&_nc_ht=scontent.faly8-2.fna&_nc_gid=E-fRj9J10T41efNKg_uoZw&oh=00_AfVzYl1KDR5YCHnugdwCumAnbaMm_s5A7uWBkCnYm9fLTQ&oe=68B64708"
+      },
+      "reaction_type": "SUPPORT",
+      "timestamp": null
+    },
+    {
+      "user": {
+        "id": "100002149913469",
+        "name": "Heba Ayman",
+        "profile_url": "https://www.facebook.com/HebaAyman512",
+        "profile_picture": "https://scontent.faly8-2.fna.fbcdn.net/v/t39.30808-1/392799224_6756793257735604_8096617048859858132_n.jpg?stp=c0.263.675.675a_cp0_dst-jpg_s40x40_tt6&_nc_cat=111&ccb=1-7&_nc_sid=e99d92&_nc_ohc=VlmmJbWMTmwQ7kNvwGrv_JB&_nc_oc=AdlQTpi88o640c-AbVSa9vuvaTG_tUcpZA6wf0Urw2Y-1_CqonLA1lsJOj4gs06HhLM&_nc_zt=24&_nc_ht=scontent.faly8-2.fna&_nc_gid=E-fRj9J10T41efNKg_uoZw&oh=00_AfWqR0tyiidRIiRX15G2AA0-UPUp4KaDES4fks4PQ_YUvw&oe=68B63E04"
+      },
+      "reaction_type": "SUPPORT",
+      "timestamp": null
+    },
+    {
+      "user": {
+        "id": "100001566371959",
+        "name": "Mahmoud Antar",
+        "profile_url": "https://www.facebook.com/Mahmoudantar210",
+        "profile_picture": "https://scontent.faly8-1.fna.fbcdn.net/v/t39.30808-1/481161220_9553670528028398_8196677596162482234_n.jpg?stp=cp0_dst-jpg_s40x40_tt6&_nc_cat=103&ccb=1-7&_nc_sid=1d2534&_nc_ohc=JaU-CbG08icQ7kNvwGOM37L&_nc_oc=AdlCAjEGhhPiYGD3ZlY-BFRWCXxsVZesagU4fwVUO1Hj50SmNb3TcLPi9rq0r40ziz8&_nc_zt=24&_nc_ht=scontent.faly8-1.fna&_nc_gid=E-fRj9J10T41efNKg_uoZw&oh=00_AfU3BuIWg_wWFFri55gFdoy63btzLcI4NZrTFkMqNbn2ew&oe=68B62E5E"
+      },
+      "reaction_type": "SUPPORT",
+      "timestamp": null
+    },
+    {
+      "user": {
+        "id": "61576986734420",
+        "name": "Islam Mahmoud",
+        "profile_url": "https://www.facebook.com/profile.php?id=61576986734420",
+        "profile_picture": "https://scontent.faly8-1.fna.fbcdn.net/v/t39.30808-1/505177098_122107465478899557_9003231151948051566_n.jpg?stp=cp0_dst-jpg_s40x40_tt6&_nc_cat=102&ccb=1-7&_nc_sid=e99d92&_nc_ohc=8qldTYFqxzYQ7kNvwGVFRfe&_nc_oc=Adn3UFjYUHUqYnpiV0m0gu7A3iMuZ-ovq0GUWvrP9PEzZUXERxdi4OWO-1r8MlUbVeA&_nc_zt=24&_nc_ht=scontent.faly8-1.fna&_nc_gid=E-fRj9J10T41efNKg_uoZw&oh=00_AfUyPqreWMsr-UM9WjZJYLLVK2KlmHW7EBUPyOyzR9yf4g&oe=68B62592"
+      },
+      "reaction_type": "LIKE",
+      "timestamp": null
+    },
+    {
+      "user": {
+        "id": "100002130446210",
+        "name": "Omar Mustafa",
+        "profile_url": "https://www.facebook.com/omeermustfaa",
+        "profile_picture": "https://scontent.faly8-1.fna.fbcdn.net/v/t39.30808-1/536280105_24320415390946137_4846162507819513522_n.jpg?stp=cp0_dst-jpg_s40x40_tt6&_nc_cat=103&ccb=1-7&_nc_sid=e99d92&_nc_ohc=uko34SUXF0wQ7kNvwGYkkcQ&_nc_oc=AdkDdqrn58NXIHGi3ACGXrk_gb3ip6m25hEF3NEDsTsPXDs01tT2gUJYFRIOHEFeEX0&_nc_zt=24&_nc_ht=scontent.faly8-1.fna&_nc_gid=E-fRj9J10T41efNKg_uoZw&oh=00_AfU9-F2x-SLJY-ofWkDpsCc0eUv9UUhHzKUHox0gtMecnw&oe=68B64E64"
+      },
+      "reaction_type": "LIKE",
+      "timestamp": null
+    }
+  ],
+  "scraped_at": "2025-08-28T17:28:51.920217"
+}

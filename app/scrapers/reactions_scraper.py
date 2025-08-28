@@ -40,17 +40,21 @@ class FacebookReactionsScraper:
             'priority': 'u=1, i'
         }
         
-        # headers للتصفح العادي
+        # headers للتصفح العادي - مع User-Agents متعددة للتوافق
         self.browser_headers = {
-            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36',
+            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
             'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8',
             'Accept-Language': 'en-US,en;q=0.9,ar;q=0.8',
-            'Accept-Encoding': 'gzip, deflate, br, zstd',
+            'Accept-Encoding': 'gzip, deflate, br',
+            'Cache-Control': 'max-age=0',
             'Sec-Fetch-Dest': 'document',
             'Sec-Fetch-Mode': 'navigate',
-            'Sec-Fetch-Site': 'same-origin',
+            'Sec-Fetch-Site': 'none',
             'Sec-Fetch-User': '?1',
-            'Upgrade-Insecure-Requests': '1'
+            'Upgrade-Insecure-Requests': '1',
+            'sec-ch-ua': '"Not_A Brand";v="8", "Chromium";v="120", "Google Chrome";v="120"',
+            'sec-ch-ua-mobile': '?0',
+            'sec-ch-ua-platform': '"Windows"'
         }
         
         # معرفات التفاعلات
@@ -68,8 +72,15 @@ class FacebookReactionsScraper:
     def load_cookies_from_array(self, cookies_array: List[Dict]) -> bool:
         """تحميل الكوكيز من array - للاستخدام في API"""
         try:
+            print(f"🔍 [DEBUG] بدء تحميل الكوكيز...")
+            print(f"🔍 [DEBUG] عدد الكوكيز المستلمة: {len(cookies_array)}")
+            
+            facebook_cookies_count = 0
             for cookie in cookies_array:
                 if cookie.get('domain') == '.facebook.com':
+                    facebook_cookies_count += 1
+                    print(f"🔍 [DEBUG] تحميل كوكي: {cookie['name']}")
+                    
                     self.session.cookies.set(
                         cookie['name'], 
                         cookie['value'], 
@@ -78,57 +89,169 @@ class FacebookReactionsScraper:
                     
                     if cookie['name'] == 'c_user':
                         self.user_id = cookie['value']
+                        print(f"🔍 [DEBUG] تم العثور على user_id: {self.user_id}")
+            
+            print(f"🔍 [DEBUG] تم تحميل {facebook_cookies_count} كوكي من فيسبوك")
             
             if not self.user_id:
+                print(f"❌ [DEBUG] لم يتم العثور على c_user في الكوكيز")
                 return False
             
+            print(f"✅ [DEBUG] تم تحميل الكوكيز بنجاح")
             return True
             
         except Exception as e:
-            print(f"❌ خطأ في تحميل الكوكيز: {e}")
+            print(f"❌ [DEBUG] خطأ في تحميل الكوكيز: {e}")
+            import traceback
+            print(f"❌ [DEBUG] تفاصيل الخطأ:")
+            traceback.print_exc()
             return False
+            
+    def check_cookies_validity(self) -> bool:
+        """التحقق من صحة الكوكيز بسرعة"""
+        try:
+            print(f"🔍 [DEBUG] التحقق من صحة الكوكيز...")
+            
+            # طلب سريع لاختبار الكوكيز
+            test_response = self.session.head('https://www.facebook.com/', timeout=10)
+            print(f"🔍 [DEBUG] حالة اختبار الكوكيز: {test_response.status_code}")
+            
+            # التحقق من وجود كوكيز أساسية
+            important_cookies = ['c_user', 'xs', 'datr']
+            for cookie_name in important_cookies:
+                if cookie_name in [cookie.name for cookie in self.session.cookies]:
+                    print(f"✅ [DEBUG] الكوكي {cookie_name} موجود")
+                else:
+                    print(f"❌ [DEBUG] الكوكي {cookie_name} مفقود")
+                    
+            return test_response.status_code in [200, 302]
+            
+        except Exception as e:
+            print(f"❌ [DEBUG] خطأ في التحقق من الكوكيز: {e}")
+            return True  # نتابع حتى لو فشل الاختبار
 
     def extract_tokens(self) -> bool:
         """استخراج التوكنز المطلوبة من فيسبوك"""
         try:
+            print(f"🔍 [DEBUG] بدء استخراج التوكنز...")
+            print(f"🔍 [DEBUG] إرسال طلب GET إلى https://www.facebook.com/")
+            
+            # محاولة أولى مع User-Agent الحالي
             response = self.session.get('https://www.facebook.com/', 
                                       headers=self.browser_headers, timeout=30)
             
+            # إذا فشلت المحاولة الأولى، جرب user-agent آخر
             if response.status_code != 200:
+                print(f"🔍 [DEBUG] المحاولة الأولى فشلت ({response.status_code})، جاري المحاولة مع User-Agent مختلف...")
+                alternative_headers = self.browser_headers.copy()
+                alternative_headers['User-Agent'] = 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
+                response = self.session.get('https://www.facebook.com/', 
+                                          headers=alternative_headers, timeout=30)
+            
+            print(f"🔍 [DEBUG] حالة الاستجابة: {response.status_code}")
+            print(f"🔍 [DEBUG] حجم المحتوى: {len(response.text)} حرف")
+            print(f"🔍 [DEBUG] Content-Type: {response.headers.get('content-type', 'غير محدد')}")
+            
+            if response.status_code != 200:
+                print(f"❌ [DEBUG] فشل الطلب مع حالة: {response.status_code}")
                 return False
             
             content = response.text
             
+            # حفظ محتوى الصفحة للديباجنج إذا لزم الأمر
+            try:
+                with open('debug_facebook_page.html', 'w', encoding='utf-8') as f:
+                    f.write(content)
+                print(f"🔍 [DEBUG] تم حفظ محتوى الصفحة في debug_facebook_page.html")
+            except:
+                pass
+            
+            # طباعة أول 500 حرف من المحتوى للديباجنج
+            print(f"🔍 [DEBUG] أول 500 حرف من المحتوى:")
+            print(f"{'='*50}")
+            print(content[:500])
+            print(f"{'='*50}")
+            
+            # التحقق من تسجيل الدخول أولاً
+            if 'login' in content or 'تسجيل الدخول' in content or content.find('<form') != -1:
+                print(f"❌ [DEBUG] يبدو أن فيسبوك يطلب تسجيل الدخول - الكوكيز قد تكون منتهية الصلاحية")
+                return False
+            
             # استخراج fb_dtsg
+            print(f"🔍 [DEBUG] البحث عن fb_dtsg...")
             dtsg_patterns = [
                 r'"DTSGInitialData",\[\],\{"token":"([^"]+)"',
                 r'"dtsg":\{"token":"([^"]+)"',
                 r'fb_dtsg":"([^"]+)"',
-                r'DTSGInitialData.*?"token":"([^"]+)"'
+                r'DTSGInitialData.*?"token":"([^"]+)"',
+                r'"fb_dtsg":"([^"]+)"',
+                r'fb_dtsg:([^,}]+)',
+                r'"token":"([a-zA-Z0-9_-]{20,})"'
             ]
             
-            for pattern in dtsg_patterns:
+            for i, pattern in enumerate(dtsg_patterns):
+                print(f"🔍 [DEBUG] تجريب نمط fb_dtsg #{i+1}: {pattern}")
                 match = re.search(pattern, content)
                 if match:
                     self.fb_dtsg = match.group(1)
+                    print(f"✅ [DEBUG] تم العثور على fb_dtsg: {self.fb_dtsg[:20]}...")
                     break
+                else:
+                    print(f"❌ [DEBUG] لم يتم العثور على fb_dtsg بالنمط #{i+1}")
+            
+            if not self.fb_dtsg:
+                print(f"❌ [DEBUG] فشل في العثور على fb_dtsg بأي نمط")
+                # البحث عن أي نصوص تحتوي على dtsg أو token
+                print(f"🔍 [DEBUG] البحث عن أي نصوص تحتوي على 'dtsg':")
+                dtsg_matches = re.findall(r'.{0,50}dtsg.{0,50}', content, re.IGNORECASE)
+                for match in dtsg_matches[:5]:  # عرض أول 5 نتائج
+                    print(f"  - {match}")
+                
+                print(f"🔍 [DEBUG] البحث عن أي نصوص تحتوي على 'token':")
+                token_matches = re.findall(r'.{0,30}token.{0,30}', content, re.IGNORECASE)
+                for match in token_matches[:5]:  # عرض أول 5 نتائج
+                    print(f"  - {match}")
             
             # استخراج lsd
+            print(f"🔍 [DEBUG] البحث عن lsd...")
             lsd_patterns = [
                 r'"LSD",\[\],\{"token":"([^"]+)"',
-                r'"token":"([^"]{20,})"'
+                r'"token":"([^"]{20,})"',
+                r'"lsd":"([^"]+)"',
+                r'lsd:([^,}]+)',
+                r'"LSD".*?"token":"([^"]+)"'
             ]
             
-            for pattern in lsd_patterns:
+            for i, pattern in enumerate(lsd_patterns):
+                print(f"🔍 [DEBUG] تجريب نمط lsd #{i+1}: {pattern}")
                 match = re.search(pattern, content)
                 if match:
                     self.lsd = match.group(1)
+                    print(f"✅ [DEBUG] تم العثور على lsd: {self.lsd[:20]}...")
                     break
+                else:
+                    print(f"❌ [DEBUG] لم يتم العثور على lsd بالنمط #{i+1}")
             
-            return bool(self.fb_dtsg)
+            if not self.lsd:
+                print(f"❌ [DEBUG] فشل في العثور على lsd بأي نمط")
+                # البحث عن أي نصوص تحتوي على LSD
+                print(f"🔍 [DEBUG] البحث عن أي نصوص تحتوي على 'LSD':")
+                lsd_matches = re.findall(r'.{0,50}LSD.{0,50}', content, re.IGNORECASE)
+                for match in lsd_matches[:5]:  # عرض أول 5 نتائج
+                    print(f"  - {match}")
+            
+            result = bool(self.fb_dtsg)
+            print(f"🔍 [DEBUG] نتيجة استخراج التوكنز: {result}")
+            print(f"🔍 [DEBUG] fb_dtsg: {'موجود' if self.fb_dtsg else 'غير موجود'}")
+            print(f"🔍 [DEBUG] lsd: {'موجود' if self.lsd else 'غير موجود'}")
+            
+            return result
             
         except Exception as e:
-            print(f"❌ خطأ في استخراج التوكنز: {e}")
+            print(f"❌ [DEBUG] خطأ في استخراج التوكنز: {e}")
+            import traceback
+            print(f"❌ [DEBUG] تفاصيل الخطأ:")
+            traceback.print_exc()
             return False
 
     def extract_post_id_from_url(self, post_url: str) -> Optional[str]:
@@ -369,26 +492,45 @@ class FacebookReactionsScraper:
                            limit: int = 0, delay: float = 2.0) -> Dict:
         """الدالة الرئيسية لسحب التفاعلات - نسخة API"""
         try:
+            print(f"🔍 [DEBUG] بدء سحب التفاعلات من: {post_url}")
+            print(f"🔍 [DEBUG] المعاملات: limit={limit}, delay={delay}")
+            
             # تحميل الكوكيز
+            print(f"🔍 [DEBUG] خطوة 1: تحميل الكوكيز...")
             if not self.load_cookies_from_array(cookies_array):
+                print(f"❌ [DEBUG] فشل في تحميل الكوكيز")
                 return {"error": "فشل في تحميل الكوكيز", "reactions": []}
             
+            # التحقق من صحة الكوكيز
+            print(f"🔍 [DEBUG] خطوة 1.5: التحقق من صحة الكوكيز...")
+            self.check_cookies_validity()
+            
             # استخراج التوكنز
+            print(f"🔍 [DEBUG] خطوة 2: استخراج التوكنز...")
             if not self.extract_tokens():
+                print(f"❌ [DEBUG] فشل في استخراج التوكنز")
                 return {"error": "فشل في استخراج التوكنز", "reactions": []}
             
             # استخراج معرف البوست
+            print(f"🔍 [DEBUG] خطوة 3: استخراج معرف البوست...")
             post_id = self.extract_post_id_from_url(post_url)
             if not post_id:
+                print(f"❌ [DEBUG] فشل في استخراج معرف البوست")
                 return {"error": "فشل في استخراج معرف البوست", "reactions": []}
+            print(f"✅ [DEBUG] معرف البوست: {post_id}")
             
             # الحصول على feedback_id
+            print(f"🔍 [DEBUG] خطوة 4: إنشاء feedback_id...")
             feedback_id = self.smart_feedback_id_extractor(post_id, post_url)
             if not feedback_id:
+                print(f"❌ [DEBUG] فشل في إنشاء feedback_id")
                 return {"error": "فشل في إنشاء feedback_id", "reactions": []}
+            print(f"✅ [DEBUG] feedback_id: {feedback_id[:50]}...")
             
             # جلب التفاعلات
+            print(f"🔍 [DEBUG] خطوة 5: جلب التفاعلات...")
             reactions = self.get_reactions(feedback_id, limit, delay)
+            print(f"✅ [DEBUG] تم جلب {len(reactions)} تفاعل")
             
             # حساب إحصائيات التفاعلات
             reaction_stats = {}
@@ -396,7 +538,9 @@ class FacebookReactionsScraper:
                 reaction_type = reaction.get('reaction_type', 'UNKNOWN')
                 reaction_stats[reaction_type] = reaction_stats.get(reaction_type, 0) + 1
             
-            return {
+            print(f"✅ [DEBUG] إحصائيات التفاعلات: {reaction_stats}")
+            
+            result = {
                 "success": True,
                 "post_url": post_url,
                 "post_id": post_id,
@@ -406,6 +550,14 @@ class FacebookReactionsScraper:
                 "scraped_at": datetime.now().isoformat()
             }
             
+            print(f"✅ [DEBUG] تم الانتهاء بنجاح من سحب التفاعلات")
+            return result
+            
         except Exception as e:
+            print(f"❌ [DEBUG] خطأ عام في السكربت: {str(e)}")
+            import traceback
+            print(f"❌ [DEBUG] تفاصيل الخطأ:")
+            traceback.print_exc()
             return {"error": f"خطأ عام في السكربت: {str(e)}", "reactions": []}
+
 

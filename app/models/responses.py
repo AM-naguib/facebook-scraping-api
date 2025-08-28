@@ -70,3 +70,4 @@ class JobsSummaryResponse(BaseModel):
     available_slots: int
     jobs_by_status: Dict[str, int]
 
+
