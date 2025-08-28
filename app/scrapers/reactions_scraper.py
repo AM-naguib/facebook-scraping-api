@@ -41,7 +41,7 @@ class FacebookReactionsScraper:
             'Sec-Fetch-Mode': 'cors',
             'Sec-Fetch-Site': 'same-origin',
             'x-fb-friendly-name': 'CometUFIReactionsDialogTabContentRefetchQuery',
-            'x-asbd-id': '129477',
+            'x-asbd-id': '359341',
             'x-fb-imd': 'false',
             'priority': 'u=1, i'
         }
@@ -624,7 +624,8 @@ class FacebookReactionsScraper:
             'fb_api_req_friendly_name': 'CometUFIReactionsDialogTabContentRefetchQuery',
             'variables': json.dumps(variables),
             'server_timestamps': 'true',
-            'doc_id': '9033628753294506'  # محدث لـ reactions
+            'doc_id': '31470716059194219',  # الصحيح من المثال
+            '__crn': 'comet.fbweb.CometSinglePostDialogRoute'
         }
 
     def process_response(self, response) -> Optional[Dict]:
