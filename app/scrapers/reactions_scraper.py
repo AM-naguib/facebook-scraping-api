@@ -527,11 +527,24 @@ class FacebookReactionsScraper:
                 # إعداد payload
                 payload = self.build_request_payload(variables, page_count)
                 
+                print(f"🔍 [DEBUG] إعداد payload...")
+                print(f"🔍 [DEBUG] fb_dtsg: {payload.get('fb_dtsg', 'غير موجود')[:20]}...")
+                print(f"🔍 [DEBUG] lsd: {payload.get('lsd', 'غير موجود')[:20]}...")
+                print(f"🔍 [DEBUG] user_id: {payload.get('__user', 'غير موجود')}")
+                print(f"🔍 [DEBUG] doc_id: {payload.get('doc_id', 'غير موجود')}")
+                
                 # إعداد headers
                 headers = self.api_headers.copy()
                 headers['x-fb-lsd'] = self.lsd
                 
+                print(f"🔍 [DEBUG] إعداد headers...")
+                print(f"🔍 [DEBUG] User-Agent: {headers.get('User-Agent', 'غير موجود')[:50]}...")
+                print(f"🔍 [DEBUG] x-fb-lsd: {headers.get('x-fb-lsd', 'غير موجود')[:20]}...")
+                
                 # إرسال الطلب
+                print(f"🔍 [DEBUG] إرسال طلب GraphQL للصفحة {page_count}")
+                print(f"🔍 [DEBUG] معاملات الطلب: count={count_per_request}, cursor={cursor}")
+                
                 response = self.session.post(
                     'https://www.facebook.com/api/graphql/',
                     data=payload,
@@ -539,7 +552,13 @@ class FacebookReactionsScraper:
                     timeout=30
                 )
                 
+                print(f"🔍 [DEBUG] حالة استجابة GraphQL: {response.status_code}")
+                print(f"🔍 [DEBUG] حجم الاستجابة: {len(response.content)} بايت")
+                print(f"🔍 [DEBUG] Content-Type: {response.headers.get('content-type', 'غير محدد')}")
+                
                 if response.status_code != 200:
+                    print(f"❌ [DEBUG] فشل طلب GraphQL مع حالة {response.status_code}")
+                    print(f"❌ [DEBUG] محتوى الخطأ: {response.text[:500]}")
                     break
                 
                 # معالجة الاستجابة
@@ -600,17 +619,32 @@ class FacebookReactionsScraper:
             'fb_api_req_friendly_name': 'CometUFIReactionsDialogTabContentRefetchQuery',
             'variables': json.dumps(variables),
             'server_timestamps': 'true',
-            'doc_id': '31470716059194219'
+            'doc_id': '27176302068566616'  # محدث: CometUFIReactionsDialogTabContentRefetchQuery
         }
 
     def process_response(self, response) -> Optional[Dict]:
         """معالجة استجابة API"""
         try:
+            print(f"🔍 [DEBUG] بدء معالجة استجابة API...")
             response_text = response.text
+            print(f"🔍 [DEBUG] حجم النص الخام: {len(response_text)} حرف")
+            
+            if not response_text.strip():
+                print(f"❌ [DEBUG] الاستجابة فارغة!")
+                return None
+            
+            print(f"🔍 [DEBUG] أول 200 حرف من الاستجابة:")
+            print(f"{'='*50}")
+            print(repr(response_text[:200]))
+            print(f"{'='*50}")
+            
             if response_text.startswith('for (;;);'):
+                print(f"🔍 [DEBUG] إزالة بادئة فيسبوك...")
                 response_text = response_text[9:]
             
+            print(f"🔍 [DEBUG] محاولة تحليل JSON...")
             data = json.loads(response_text)
+            print(f"✅ [DEBUG] تم تحليل JSON بنجاح")
             
             # استخراج التفاعلات
             if 'data' in data and 'node' in data['data']:
