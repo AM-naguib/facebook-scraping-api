@@ -48,7 +48,14 @@ def test_token_extraction():
     print(f"🔍 نتيجة الاختبار: {'نجح' if result else 'فشل'}")
     if result:
         print(f"✅ fb_dtsg: {scraper.fb_dtsg}")
-        print(f"✅ lsd: {scraper.lsd}")
+        print(f"✅ lsd: {scraper.lsd if scraper.lsd else 'غير موجود (لكن fb_dtsg كافي)'}")
+    else:
+        print("❌ لم يتم العثور على أي توكنز")
+        print("💡 تحقق من:")
+        print("   - صحة الكوكيز")
+        print("   - اتصال الإنترنت")
+        print("   - إعدادات الخادم/firewall")
+        print("   - ملف debug_facebook_page.html لمعرفة ما يُستلم من فيسبوك")
     print("="*60)
     
     return result

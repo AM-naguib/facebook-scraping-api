@@ -9,6 +9,8 @@ import requests
 import time
 import urllib.parse
 import base64
+import gzip
+import io
 from datetime import datetime
 from typing import Optional, Dict, List, Any
 
@@ -45,16 +47,15 @@ class FacebookReactionsScraper:
             'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
             'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8',
             'Accept-Language': 'en-US,en;q=0.9,ar;q=0.8',
-            'Accept-Encoding': 'gzip, deflate, br',
+            'Accept-Encoding': 'identity',  # إزالة الضغط لتجنب مشاكل decoding
             'Cache-Control': 'max-age=0',
+            'Connection': 'keep-alive',
             'Sec-Fetch-Dest': 'document',
             'Sec-Fetch-Mode': 'navigate',
             'Sec-Fetch-Site': 'none',
             'Sec-Fetch-User': '?1',
             'Upgrade-Insecure-Requests': '1',
-            'sec-ch-ua': '"Not_A Brand";v="8", "Chromium";v="120", "Google Chrome";v="120"',
-            'sec-ch-ua-mobile': '?0',
-            'sec-ch-ua-platform': '"Windows"'
+            'Pragma': 'no-cache'
         }
         
         # معرفات التفاعلات
@@ -129,6 +130,30 @@ class FacebookReactionsScraper:
         except Exception as e:
             print(f"❌ [DEBUG] خطأ في التحقق من الكوكيز: {e}")
             return True  # نتابع حتى لو فشل الاختبار
+    
+    def decompress_content(self, response) -> str:
+        """إلغاء ضغط المحتوى يدوياً إذا لزم الأمر"""
+        try:
+            content_encoding = response.headers.get('content-encoding', '').lower()
+            
+            if content_encoding == 'gzip':
+                print(f"🔍 [DEBUG] إلغاء ضغط gzip يدوياً...")
+                return gzip.decompress(response.content).decode('utf-8')
+            elif content_encoding == 'deflate':
+                print(f"🔍 [DEBUG] إلغاء ضغط deflate يدوياً...")
+                import zlib
+                return zlib.decompress(response.content).decode('utf-8')
+            else:
+                # المحتوى غير مضغوط أو requests تعامل معه
+                return response.text
+                
+        except Exception as e:
+            print(f"❌ [DEBUG] خطأ في إلغاء الضغط: {e}")
+            # كبديل، جرب response.text العادي
+            try:
+                return response.text
+            except:
+                return response.content.decode('utf-8', errors='ignore')
 
     def extract_tokens(self) -> bool:
         """استخراج التوكنز المطلوبة من فيسبوك"""
@@ -149,14 +174,49 @@ class FacebookReactionsScraper:
                                           headers=alternative_headers, timeout=30)
             
             print(f"🔍 [DEBUG] حالة الاستجابة: {response.status_code}")
-            print(f"🔍 [DEBUG] حجم المحتوى: {len(response.text)} حرف")
+            print(f"🔍 [DEBUG] حجم المحتوى الخام: {len(response.content)} بايت")
             print(f"🔍 [DEBUG] Content-Type: {response.headers.get('content-type', 'غير محدد')}")
+            print(f"🔍 [DEBUG] Content-Encoding: {response.headers.get('content-encoding', 'غير محدد')}")
             
             if response.status_code != 200:
                 print(f"❌ [DEBUG] فشل الطلب مع حالة: {response.status_code}")
                 return False
             
-            content = response.text
+            # التأكد من إلغاء ضغط المحتوى باستخدام الدالة المخصصة
+            try:
+                content = self.decompress_content(response)
+                print(f"🔍 [DEBUG] حجم المحتوى بعد إلغاء الضغط: {len(content)} حرف")
+                
+                # التحقق من أن المحتوى نص صالح
+                if len(content) == 0:
+                    print(f"❌ [DEBUG] المحتوى فارغ")
+                    return False
+                
+                # التحقق من وجود HTML tags أساسية
+                if '<html' not in content.lower() and '<div' not in content.lower() and '<script' not in content.lower():
+                    print(f"❌ [DEBUG] المحتوى لا يبدو كـ HTML صحيح")
+                    print(f"🔍 [DEBUG] أول 200 حرف: {repr(content[:200])}")
+                    
+                    # محاولة إضافية مع headers مختلفة
+                    print(f"🔍 [DEBUG] محاولة مع headers مبسطة...")
+                    simple_headers = {
+                        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36',
+                        'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+                        'Accept-Language': 'en-US,en;q=0.5',
+                        'Accept-Encoding': 'identity',
+                        'Connection': 'keep-alive',
+                        'Upgrade-Insecure-Requests': '1'
+                    }
+                    response = self.session.get('https://www.facebook.com/', 
+                                              headers=simple_headers, timeout=30)
+                    content = self.decompress_content(response)
+                    print(f"🔍 [DEBUG] حجم المحتوى الجديد: {len(content)} حرف")
+                    
+            except Exception as e:
+                print(f"❌ [DEBUG] خطأ في معالجة المحتوى: {e}")
+                import traceback
+                traceback.print_exc()
+                return False
             
             # حفظ محتوى الصفحة للديباجنج إذا لزم الأمر
             try:
@@ -172,9 +232,19 @@ class FacebookReactionsScraper:
             print(content[:500])
             print(f"{'='*50}")
             
-            # التحقق من تسجيل الدخول أولاً
-            if 'login' in content or 'تسجيل الدخول' in content or content.find('<form') != -1:
+            # التحقق من تسجيل الدخول والأخطاء أولاً
+            content_lower = content.lower()
+            
+            if any(keyword in content_lower for keyword in ['login', 'sign in', 'تسجيل الدخول']):
                 print(f"❌ [DEBUG] يبدو أن فيسبوك يطلب تسجيل الدخول - الكوكيز قد تكون منتهية الصلاحية")
+                return False
+            
+            if any(keyword in content_lower for keyword in ['error', 'not found', '404', 'خطأ']):
+                print(f"❌ [DEBUG] فيسبوك يعرض صفحة خطأ")
+                return False
+            
+            if 'checkpoint' in content_lower or 'security' in content_lower:
+                print(f"❌ [DEBUG] فيسبوك يطلب تأكيد الأمان - قد تحتاج لتسجيل دخول جديد")
                 return False
             
             # استخراج fb_dtsg
@@ -185,8 +255,13 @@ class FacebookReactionsScraper:
                 r'fb_dtsg":"([^"]+)"',
                 r'DTSGInitialData.*?"token":"([^"]+)"',
                 r'"fb_dtsg":"([^"]+)"',
-                r'fb_dtsg:([^,}]+)',
-                r'"token":"([a-zA-Z0-9_-]{20,})"'
+                r'fb_dtsg["\']?\s*:\s*["\']([^"\']+)["\']',
+                r'name="fb_dtsg"\s+value="([^"]+)"',
+                r'fb_dtsg.*?value="([^"]+)"',
+                r'"token":"([a-zA-Z0-9_-]{20,})"',
+                # أنماط إضافية للمحتوى المضغوط
+                r'dtsg[^a-zA-Z0-9]+([a-zA-Z0-9_-]{20,})',
+                r'token[^a-zA-Z0-9]+([a-zA-Z0-9_-]{20,})'
             ]
             
             for i, pattern in enumerate(dtsg_patterns):
@@ -218,8 +293,13 @@ class FacebookReactionsScraper:
                 r'"LSD",\[\],\{"token":"([^"]+)"',
                 r'"token":"([^"]{20,})"',
                 r'"lsd":"([^"]+)"',
-                r'lsd:([^,}]+)',
-                r'"LSD".*?"token":"([^"]+)"'
+                r'lsd["\']?\s*:\s*["\']([^"\']+)["\']',
+                r'name="lsd"\s+value="([^"]+)"',
+                r'lsd.*?value="([^"]+)"',
+                r'"LSD".*?"token":"([^"]+)"',
+                # أنماط إضافية للمحتوى المضغوط
+                r'lsd[^a-zA-Z0-9]+([a-zA-Z0-9_-]{15,})',
+                r'LSD[^a-zA-Z0-9]+([a-zA-Z0-9_-]{15,})'
             ]
             
             for i, pattern in enumerate(lsd_patterns):
@@ -252,6 +332,57 @@ class FacebookReactionsScraper:
             import traceback
             print(f"❌ [DEBUG] تفاصيل الخطأ:")
             traceback.print_exc()
+            return False
+    
+    def extract_tokens_alternative(self) -> bool:
+        """طريقة بديلة لاستخراج التوكنز من صفحة مختلفة"""
+        try:
+            print(f"🔍 [DEBUG] محاولة استخراج التوكنز من طريقة بديلة...")
+            
+            # جرب صفحة mobile facebook
+            mobile_headers = self.browser_headers.copy()
+            mobile_headers['User-Agent'] = 'Mozilla/5.0 (iPhone; CPU iPhone OS 15_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/15.0 Mobile/15E148 Safari/604.1'
+            
+            response = self.session.get('https://m.facebook.com/', 
+                                      headers=mobile_headers, timeout=30)
+            
+            if response.status_code == 200:
+                content = self.decompress_content(response)
+                print(f"🔍 [DEBUG] حجم محتوى الموبايل: {len(content)} حرف")
+                
+                # البحث في محتوى الموبايل
+                dtsg_patterns = [
+                    r'name="fb_dtsg"\s+value="([^"]+)"',
+                    r'fb_dtsg.*?value="([^"]+)"',
+                    r'"dtsg":"([^"]+)"',
+                    r'dtsg[^a-zA-Z0-9]+([a-zA-Z0-9_-]{20,})'
+                ]
+                
+                for pattern in dtsg_patterns:
+                    match = re.search(pattern, content)
+                    if match:
+                        self.fb_dtsg = match.group(1)
+                        print(f"✅ [DEBUG] تم العثور على fb_dtsg من الموبايل: {self.fb_dtsg[:20]}...")
+                        break
+                
+                # البحث عن lsd
+                lsd_patterns = [
+                    r'name="lsd"\s+value="([^"]+)"',
+                    r'lsd.*?value="([^"]+)"',
+                    r'"lsd":"([^"]+)"'
+                ]
+                
+                for pattern in lsd_patterns:
+                    match = re.search(pattern, content)
+                    if match:
+                        self.lsd = match.group(1)
+                        print(f"✅ [DEBUG] تم العثور على lsd من الموبايل: {self.lsd[:20]}...")
+                        break
+            
+            return bool(self.fb_dtsg)
+            
+        except Exception as e:
+            print(f"❌ [DEBUG] خطأ في الطريقة البديلة: {e}")
             return False
 
     def extract_post_id_from_url(self, post_url: str) -> Optional[str]:
@@ -508,8 +639,11 @@ class FacebookReactionsScraper:
             # استخراج التوكنز
             print(f"🔍 [DEBUG] خطوة 2: استخراج التوكنز...")
             if not self.extract_tokens():
-                print(f"❌ [DEBUG] فشل في استخراج التوكنز")
-                return {"error": "فشل في استخراج التوكنز", "reactions": []}
+                print(f"❌ [DEBUG] فشل في استخراج التوكنز من الطريقة الأساسية")
+                print(f"🔍 [DEBUG] جاري المحاولة بالطريقة البديلة...")
+                if not self.extract_tokens_alternative():
+                    print(f"❌ [DEBUG] فشل في استخراج التوكنز من جميع الطرق")
+                    return {"error": "فشل في استخراج التوكنز", "reactions": []}
             
             # استخراج معرف البوست
             print(f"🔍 [DEBUG] خطوة 3: استخراج معرف البوست...")
