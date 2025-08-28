@@ -28,17 +28,21 @@ class FacebookReactionsScraper:
         
         # إعدادات headers لـ GraphQL API
         self.api_headers = {
-            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36',
+            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
             'Accept': '*/*',
             'Accept-Language': 'en-US,en;q=0.9,ar;q=0.8',
-            'Accept-Encoding': 'gzip, deflate, br, zstd',
+            'Accept-Encoding': 'identity',  # تجنب مشاكل الضغط في GraphQL
             'Content-Type': 'application/x-www-form-urlencoded',
             'Origin': 'https://www.facebook.com',
             'Referer': 'https://www.facebook.com/',
+            'Cache-Control': 'no-cache',
+            'Pragma': 'no-cache',
             'Sec-Fetch-Dest': 'empty',
             'Sec-Fetch-Mode': 'cors',
             'Sec-Fetch-Site': 'same-origin',
             'x-fb-friendly-name': 'CometUFIReactionsDialogTabContentRefetchQuery',
+            'x-asbd-id': '129477',
+            'x-fb-imd': 'false',
             'priority': 'u=1, i'
         }
         
@@ -596,6 +600,7 @@ class FacebookReactionsScraper:
 
     def build_request_payload(self, variables: Dict, page_count: int) -> Dict:
         """بناء payload للطلب"""
+        current_time = int(time.time())
         return {
             'av': self.user_id,
             '__aaid': '0',
@@ -605,28 +610,39 @@ class FacebookReactionsScraper:
             '__hs': '20326.HYP:comet_pkg.2.1...0',
             'dpr': '1',
             '__ccg': 'EXCELLENT',
-            '__rev': '1026326043',
-            '__s': 'deup5g:m4uo1p:p0pyqa',
+            '__rev': '1026462676',  # محدث
+            '__s': f'deup5g:m4uo1p:{current_time}',
             '__hsi': '7542830019330714267',
-            '__comet_req': '15',
+            '__comet_req': f'{page_count + 14}',
             'fb_dtsg': self.fb_dtsg,
             'jazoest': self.jazoest,
             'lsd': self.lsd,
-            '__spin_r': '1026326043',
+            '__spin_r': '1026462676',
             '__spin_b': 'trunk',
-            '__spin_t': str(int(time.time())),
+            '__spin_t': str(current_time),
             'fb_api_caller_class': 'RelayModern',
             'fb_api_req_friendly_name': 'CometUFIReactionsDialogTabContentRefetchQuery',
             'variables': json.dumps(variables),
             'server_timestamps': 'true',
-            'doc_id': '27176302068566616'  # محدث: CometUFIReactionsDialogTabContentRefetchQuery
+            'doc_id': '9033628753294506'  # محدث لـ reactions
         }
 
     def process_response(self, response) -> Optional[Dict]:
         """معالجة استجابة API"""
         try:
             print(f"🔍 [DEBUG] بدء معالجة استجابة API...")
-            response_text = response.text
+            
+            # التحقق من Content-Type
+            content_type = response.headers.get('content-type', '').lower()
+            print(f"🔍 [DEBUG] Content-Type: {content_type}")
+            
+            # إذا كان المحتوى مضغوط أو binary، استخدم الدالة المخصصة
+            if 'html' in content_type or len(response.content) != len(response.text):
+                print(f"🔍 [DEBUG] محتوى مضغوط أو binary، استخدام إلغاء الضغط...")
+                response_text = self.decompress_content(response)
+            else:
+                response_text = response.text
+            
             print(f"🔍 [DEBUG] حجم النص الخام: {len(response_text)} حرف")
             
             if not response_text.strip():
@@ -637,6 +653,11 @@ class FacebookReactionsScraper:
             print(f"{'='*50}")
             print(repr(response_text[:200]))
             print(f"{'='*50}")
+            
+            # التحقق من صيغة HTML خاطئة
+            if response_text.strip().startswith('<'):
+                print(f"❌ [DEBUG] فيسبوك يعيد HTML بدلاً من JSON - قد تكون مشكلة authentication أو rate limiting")
+                return None
             
             if response_text.startswith('for (;;);'):
                 print(f"🔍 [DEBUG] إزالة بادئة فيسبوك...")
